@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR4LSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        #qr-code {
+            margin-top: 20px;
+        }
+        #generate-btn {
+            background-color: #b5121b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        #generate-btn:hover {
+            opacity: 0.9;
+        }
+        #logo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>QR Code Generator</h1>
+    <input type="text" id="url-input" placeholder="Paste your URL here" style="width: 80%; padding: 10px;">
+    <br><br>
+    <label for="color-picker">Choose QR Code Color:</label>
+    <input type="color" id="color-picker" value="#000000">
+    <br><br>
+    <button id="generate-btn">Generate QR Code</button>
+    <br><br>
+    <canvas id="qr-code"></canvas>
+    <img id="logo" src="https://www.lancaster.ac.uk/media/wdp/style-assets/images/library/library-logo.svg" alt="Library Logo">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script>
+    const generateBtn = document.getElementById('generate-btn');
+    const qrCanvas = document.getElementById('qr-code');
+    const urlInput = document.getElementById('url-input');
+    const colorPicker = document.getElementById('color-picker');
+
+    generateBtn.addEventListener('click', () => {
+        const url = urlInput.value;
+        const color = colorPicker.value;
+
+        if (url) {
+            QRCode.toCanvas(qrCanvas, url, {
+                width: 256,
+                margin: 1,
+                color: {
+                    dark: color,
+                    light: "#FFFFFF"
+                }
+            }, function (error) {
+                if (error) console.error(error);
+                console.log('QR code generated!');
+            });
+        } else {
+            alert('Please enter a URL!');
+        }
+    });
+</script>
+
+</body>
+</html>
